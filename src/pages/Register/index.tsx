@@ -17,12 +17,50 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useToast } from "@chakra-ui/react";
+
+import { signUp as signUpService } from "../../services/auth";
 
 const Register = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const toast = useToast();
+  const signup = async () => {
+    try {
+      const response = await signUpService({ name, email, password });
+      if (response.status === 201) {
+        toast({
+          title: "Sucesso!",
+          description: response.data.msg,
+          status: "success",
+          duration: 90000,
+          isClosable: true,
+        });
+      }
+    } catch (error: any) {
+      if (error.response.status === 422) {
+        toast({
+          title: "Erro 422",
+          description: error.response.data.msg,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: "Erro",
+          description: "Falha tente novamente mais tarde!",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    }
+  };
 
   return (
     <Flex
@@ -49,17 +87,20 @@ const Register = () => {
           <Stack spacing={4}>
             <FormControl id='firstName' isRequired>
               <FormLabel>Nome:</FormLabel>
-              <Input type='text' />
+              <Input type='text' onChange={(e) => setName(e.target.value)} />
             </FormControl>
 
             <FormControl id='email' isRequired>
               <FormLabel>Endereço de email:</FormLabel>
-              <Input type='email' />
+              <Input type='email' onChange={(e) => setEmail(e.target.value)} />
             </FormControl>
             <FormControl id='password' isRequired>
               <FormLabel>Senha:</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? "text" : "password"} />
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
                 <InputRightElement h={"full"}>
                   <Button
                     variant={"ghost"}
@@ -81,13 +122,17 @@ const Register = () => {
                 _hover={{
                   bg: "blue.500",
                 }}
+                onClick={signup}
               >
                 Cadastrar
               </Button>
             </Stack>
             <Stack pt={6}>
               <Text align={"center"}>
-                Já é um usuário? <Link color={"blue.400"}>Entre</Link>
+                Já é um usuário?{" "}
+                <Link color={"blue.400"} href={"/"}>
+                  Entre
+                </Link>
               </Text>
             </Stack>
           </Stack>
