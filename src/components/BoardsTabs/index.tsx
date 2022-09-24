@@ -8,28 +8,30 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import Note from "../Note";
+import { IBoard } from "../../interfaces/board";
 
-const BoardsTabs = () => {
+interface IBoardsTabs {
+  boards: IBoard[];
+}
+
+const BoardsTabs = ({ boards }: IBoardsTabs) => {
+  console.log(boards);
   return (
-    <Tabs variant='soft-rounded' colorScheme='green' mt='4'>
-      <TabList>
-        <Tab>Board 1</Tab>
-        <Tab>Board 2</Tab>
+    <Tabs m='5' variant='soft-rounded'>
+      <TabList flexWrap={"wrap"}>
+        {boards.map((board, i) => (
+          <Tab _selected={{ color: "Black", bg: "white" }}>Board {i + 1}</Tab>
+        ))}
       </TabList>
       <TabPanels>
-        <TabPanel>
-          <Flex flexWrap={"wrap"} gap='16px'>
-            <Note />
-            <Note />
-            <Note />
-            <Note />
-            <Note />
-            <Note />
-          </Flex>
-        </TabPanel>
-        <TabPanel>
-          <p>two!</p>
-        </TabPanel>
+        {boards.map((board, i) => (
+          <TabPanel>
+            <Flex flexWrap={"wrap"} gap='16px'>
+              <Note />
+              <Note />
+            </Flex>
+          </TabPanel>
+        ))}
       </TabPanels>
     </Tabs>
   );

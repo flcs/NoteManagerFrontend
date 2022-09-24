@@ -5,7 +5,6 @@ import {
   FormLabel,
   Input,
   Textarea,
-  useDisclosure,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -16,7 +15,6 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { EditIcon } from "@chakra-ui/icons";
 
 interface INoteEditForm {
   isOpen: boolean;

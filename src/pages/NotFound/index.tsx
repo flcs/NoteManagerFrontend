@@ -7,7 +7,7 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   return (
-    <Box textAlign='center' py={10} px={6}>
+    <Box textAlign='center' py={10} px={6} h='100vh'>
       <Heading
         display='inline-block'
         as='h2'

@@ -29,33 +29,17 @@ const Links: { container: "adm" | "viwer"; name: string }[] = [
     name: "Friends Boards",
   },
 ];
-
-const NavLink = ({ children }: { children: ReactNode }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={"md"}
-    _hover={{
-      textDecoration: "none",
-      bg: useColorModeValue("gray.200", "gray.700"),
-    }}
-    href={"#"}
-  >
-    {children}
-  </Link>
-);
-
 interface INavbar {
   handleContainer: (newContainer: "adm" | "viwer") => void;
 }
 
 export default function Navbar({ handleContainer }: INavbar) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user, signOut } = useAuth();
+  const { signOut } = useAuth();
 
   return (
     <>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+      <Box bg={"white"} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
@@ -65,7 +49,7 @@ export default function Navbar({ handleContainer }: INavbar) {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={"center"}>
-            <Box>Note Manager</Box>
+            <Box fontWeight={"bold"}>Note Manager</Box>
             <HStack
               as={"nav"}
               spacing={4}
