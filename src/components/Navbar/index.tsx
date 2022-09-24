@@ -22,11 +22,11 @@ import { useAuth } from "../../context/auth";
 const Links: { container: "adm" | "viwer"; name: string }[] = [
   {
     container: "adm",
-    name: "Your Boards",
+    name: "Meus quadros",
   },
   {
     container: "viwer",
-    name: "Friends Boards",
+    name: "Quadros compartilhados",
   },
 ];
 interface INavbar {
@@ -35,7 +35,7 @@ interface INavbar {
 
 export default function Navbar({ handleContainer }: INavbar) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
 
   return (
     <>

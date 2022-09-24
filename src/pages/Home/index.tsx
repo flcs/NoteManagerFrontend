@@ -1,6 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import BoardsTabs from "../../components/BoardsTabs";
+import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
 import { useAuth } from "../../context/auth";
 import { IBoard } from "../../interfaces/board";
@@ -8,6 +9,8 @@ import { IBoard } from "../../interfaces/board";
 import {
   getAdminBoards as serviceGetAdminBoards,
   getViwerBoards as serviceGetViwerBoards,
+  createBoard as serviceCreateBoard,
+  deleteBoard as serviceDeleteBoard,
 } from "../../services/board";
 
 const Home = () => {
@@ -53,16 +56,45 @@ const Home = () => {
     }
   };
 
+  const createBoard = async () => {
+    try {
+      const response = await serviceCreateBoard({ admin: user?._id });
+      console.log(response);
+      getBoards();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteBoard = async (_id: string | undefined) => {
+    try {
+      const response = await serviceDeleteBoard({ _id });
+      console.log(response);
+      getBoards();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <Box minH={"100vh"} bg={"blue.300"}>
-      <Navbar handleContainer={handleContainer} />
-      {boards && <BoardsTabs boards={boards} />}
-      {boards?.length === 0 && (
-        <Text m='5'>Não foi encontrado nenhum quadro</Text>
-      )}
-      {/* {container === "adm" && <AdmBoards />}
+    <>
+      <Box minH={"calc(100vh - 64px)"} bg={"blue.300"}>
+        <Navbar handleContainer={handleContainer} />
+        {boards && (
+          <BoardsTabs
+            boards={boards}
+            createBoard={createBoard}
+            deleteBoard={deleteBoard}
+          />
+        )}
+        {boards?.length === 0 && (
+          <Text m='5'>Não foi encontrado nenhum quadro</Text>
+        )}
+        {/* {container === "adm" && <AdmBoards />}
       {container === "viwer" && <ViwerBoards />} */}
-    </Box>
+      </Box>
+      <Footer />
+    </>
   );
 };
 
