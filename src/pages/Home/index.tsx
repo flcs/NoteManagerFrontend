@@ -86,6 +86,7 @@ const Home = () => {
             boards={boards}
             createBoard={createBoard}
             deleteBoard={deleteBoard}
+            container={container}
           />
         )}
         {boards?.length === 0 && container === "adm" && (

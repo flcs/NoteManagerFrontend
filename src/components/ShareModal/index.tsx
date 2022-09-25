@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -15,11 +15,16 @@ import {
   Flex,
   List,
   ListItem,
+  useToast,
 } from "@chakra-ui/react";
 import { HiOutlineShare } from "react-icons/hi";
 import userEvent from "@testing-library/user-event";
 import { useAuth } from "../../context/auth";
 import { DeleteIcon } from "@chakra-ui/icons";
+import {
+  addViwer as serviceAddViwer,
+  delViwer as serviceDelViwer,
+} from "../../services/board";
 
 interface IShareModal {
   viwerBoards: string[] | undefined;
@@ -28,6 +33,52 @@ interface IShareModal {
 
 const ShareModal = ({ viwerBoards, boardId }: IShareModal) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [viwerId, setViwerId] = useState<string>("");
+
+  const toast = useToast();
+  const addViwer = async () => {
+    try {
+      await serviceAddViwer({ _id: boardId, viwer: viwerId });
+      toast({
+        title: "Sucesso!",
+        description: "Visualizador adicionado com sucesso",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Erro!",
+        description: "Falha ao adicionar",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
+  const delViwer = async (viwerId: string) => {
+    try {
+      await serviceDelViwer({ _id: boardId, viwer: viwerId });
+      toast({
+        title: "Sucesso!",
+        description: "Visualizador removido com sucesso",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Erro!",
+        description: "Falha ao remover",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
 
   return (
     <>
@@ -50,11 +101,19 @@ const ShareModal = ({ viwerBoards, boardId }: IShareModal) => {
           <ModalBody pb={6}>
             <FormControl>
               <FormLabel>Adicionar visualizador</FormLabel>
-              <Input placeholder='ID do visualizador' />
+              <Input
+                placeholder='ID do visualizador'
+                value={viwerId}
+                onChange={(e) => setViwerId(e.target.value)}
+              />
             </FormControl>
             <List>
               {viwerBoards?.map((vb, i) => (
-                <ListItem>
+                <ListItem
+                  display={"flex"}
+                  justifyContent={"space-evenly"}
+                  mt='4'
+                >
                   {vb}
                   <DeleteIcon
                     width={"20px"}
@@ -62,7 +121,7 @@ const ShareModal = ({ viwerBoards, boardId }: IShareModal) => {
                     cursor={"pointer"}
                     color={"red"}
                     onClick={() => {
-                      console.log("alou");
+                      delViwer(vb);
                     }}
                   />
                 </ListItem>
@@ -71,8 +130,8 @@ const ShareModal = ({ viwerBoards, boardId }: IShareModal) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3}>
-              Save
+            <Button colorScheme='blue' mr={3} onClick={addViwer}>
+              Salvar
             </Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>

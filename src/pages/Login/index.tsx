@@ -74,7 +74,7 @@ const Login = () => {
                   }}
                   onClick={handleSign}
                 >
-                  Sign in
+                  Entrar
                 </Button>
               </Stack>
             </Stack>

@@ -95,6 +95,7 @@ export default function Navbar({ handleContainer }: INavbar) {
                 />
               </MenuButton>
               <MenuList>
+                <MenuItem>{user?.name}</MenuItem>
                 <MenuItem onClick={sendToclipboard}>
                   <Text>
                     ID de compartilhamento
