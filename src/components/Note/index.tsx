@@ -74,8 +74,15 @@ const Note = ({ _id, title, description, board, reload }: INoteComponent) => {
         <Center justifyContent='space-between' alignItems={"flex-start"}>
           <Heading overflow={"hidden"}>{title}</Heading>
           <Center flexDir={"column"} gap='4'>
-            <DeleteIcon color={"red"} cursor='pointer' onClick={deleteNote} />
-            <EditIcon onClick={() => setEditModalOpen(true)} cursor='pointer' />
+            <DeleteIcon
+              color={"red"}
+              cursor='pointer'
+              onClick={() => _id !== "0" && deleteNote()}
+            />
+            <EditIcon
+              onClick={() => _id !== "0" && setEditModalOpen(true)}
+              cursor='pointer'
+            />
           </Center>
           {/* <NoteOptions _id={_id} title={title} description={description} /> */}
         </Center>

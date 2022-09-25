@@ -5,19 +5,26 @@ interface I_id {
   _id: string | undefined;
 }
 
-const token = localStorage.getItem("@RNAuth:token");
-const config = { headers: { Authorization: `Bearer ${token}` } };
+const getConfig = () => {
+  const token = localStorage.getItem("@RNAuth:token");
+  const config = { headers: { Authorization: `Bearer ${token}` } };
+  return config;
+};
 
 export const createNote = async (data: INote) =>
-  api.post("/note", data, config);
+  api.post("/note", data, getConfig());
 
 export const getNotes = async (data: { board: string }) =>
-  api.post("/notes", data, config);
+  api.post("/notes", data, getConfig());
 
-export const editNote = async (data: INote) => api.put("/note", data, config);
+export const editNote = async (data: INote) =>
+  api.put("/note", data, getConfig());
 
-export const deleteNote = async (data: I_id) =>
-  api.delete("/note", {
+export const deleteNote = async (data: I_id) => {
+  const token = localStorage.getItem("@RNAuth:token");
+
+  return api.delete("/note", {
     data: { data },
     headers: { Authorization: `Bearer ${token}` },
   });
+};

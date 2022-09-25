@@ -7,7 +7,7 @@ import {
   useColorModeValue,
   VisuallyHidden,
 } from "@chakra-ui/react";
-import { FaInstagram, FaTwitter, FaYoutube, FaGithub } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import { ReactNode } from "react";
 
 const SocialButton = ({
@@ -60,7 +60,10 @@ export default function Footer() {
       >
         <Text>Criado em 2022 por Lucas Schimith</Text>
         <Stack direction={"row"} spacing={6}>
-          <SocialButton label={"Twitter"} href={"#"}>
+          <SocialButton
+            label={"Twitter"}
+            href={"https://github.com/Schimith98"}
+          >
             <FaGithub />
           </SocialButton>
         </Stack>

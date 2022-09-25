@@ -15,6 +15,8 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
+  Text,
+  useToast,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { useAuth } from "../../context/auth";
@@ -36,6 +38,19 @@ interface INavbar {
 export default function Navbar({ handleContainer }: INavbar) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user, signOut } = useAuth();
+
+  const toast = useToast();
+
+  const sendToclipboard = () => {
+    navigator.clipboard.writeText(user?._id || "");
+    toast({
+      title: "Sucesso!",
+      description: "Id copiado para a área de transferência",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
+  };
 
   return (
     <>
@@ -80,6 +95,13 @@ export default function Navbar({ handleContainer }: INavbar) {
                 />
               </MenuButton>
               <MenuList>
+                <MenuItem onClick={sendToclipboard}>
+                  <Text>
+                    ID de compartilhamento
+                    <br />
+                    {user?._id}
+                  </Text>
+                </MenuItem>
                 <MenuItem onClick={signOut}>Sair</MenuItem>
               </MenuList>
             </Menu>

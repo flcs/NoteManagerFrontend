@@ -15,6 +15,7 @@ import { HiOutlineShare } from "react-icons/hi";
 import NoteForm from "../NoteForm";
 import { INote } from "../../interfaces/note";
 import { getNotes as serviceGetNotes } from "../../services/note";
+import ShareModal from "../ShareModal";
 interface IBoardsTabs {
   boards: IBoard[];
   createBoard: () => void;
@@ -77,7 +78,7 @@ const BoardsTabs = ({ boards, createBoard, deleteBoard }: IBoardsTabs) => {
                 justifyContent={"space-between"}
                 alignItems={"center"}
                 p='4px 16px'
-                mb={"10px"}
+                mb={"16px"}
                 gap={5}
                 bgColor={"white"}
                 borderRadius='full'
@@ -90,10 +91,11 @@ const BoardsTabs = ({ boards, createBoard, deleteBoard }: IBoardsTabs) => {
                     cursor={"pointer"}
                     onClick={() => createBoard()}
                   >
-                    <AddIcon width={"24px"} height={"24px"} />
+                    <AddIcon width={"20px"} height={"20px"} />
                     Criar Quadro
                   </Flex>
-                  <Flex
+                  <ShareModal viwerBoards={board.viwer} boardId={board._id} />
+                  {/* <Flex
                     gap={2}
                     alignItems={"center"}
                     color='black'
@@ -101,7 +103,7 @@ const BoardsTabs = ({ boards, createBoard, deleteBoard }: IBoardsTabs) => {
                   >
                     <HiOutlineShare size={"24px"} />
                     Compartilhar
-                  </Flex>
+                  </Flex> */}
                 </Flex>
                 <DeleteIcon
                   width={"20px"}
@@ -123,7 +125,17 @@ const BoardsTabs = ({ boards, createBoard, deleteBoard }: IBoardsTabs) => {
                     reload={reload}
                   />
                 ))}
-                {notes?.length === 0 && <Text>Quadro Vazio</Text>}
+                {notes?.length === 0 && (
+                  <Note
+                    _id={"0"}
+                    title={"Quadro vazio"}
+                    description={
+                      "Clique no botão ao lado para criar uma nova nota"
+                    }
+                    board={"0"}
+                    reload={reload}
+                  />
+                )}
                 <Flex
                   gap={2}
                   alignItems={"center"}
@@ -138,7 +150,7 @@ const BoardsTabs = ({ boards, createBoard, deleteBoard }: IBoardsTabs) => {
                     setNoteModalOpen(true);
                   }}
                 >
-                  <AddIcon width={"24px"} height={"24px"} />
+                  <AddIcon width={"20px"} height={"20px"} />
                   Nova nota
                 </Flex>
               </Flex>

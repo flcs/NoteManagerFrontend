@@ -1,4 +1,5 @@
-import { Box, Text } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
+import { Box, Flex } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import BoardsTabs from "../../components/BoardsTabs";
 import Footer from "../../components/Footer";
@@ -14,7 +15,7 @@ import {
 } from "../../services/board";
 
 const Home = () => {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const [container, setContainer] = useState<"adm" | "viwer">("adm");
   const [boards, setBoards] = useState<IBoard[] | undefined>(undefined);
   const handleContainer = (newContainer: "adm" | "viwer") => {
@@ -87,8 +88,22 @@ const Home = () => {
             deleteBoard={deleteBoard}
           />
         )}
-        {boards?.length === 0 && (
-          <Text m='5'>Não foi encontrado nenhum quadro</Text>
+        {boards?.length === 0 && container === "adm" && (
+          <Flex
+            gap={2}
+            alignItems={"center"}
+            color='black'
+            cursor={"pointer"}
+            onClick={() => createBoard()}
+            bgColor={"white"}
+            w='fit-content'
+            m='5'
+            p='8px 16px '
+            borderRadius={"full"}
+          >
+            <AddIcon width={"20px"} height={"20px"} />
+            Criar Quadro
+          </Flex>
         )}
         {/* {container === "adm" && <AdmBoards />}
       {container === "viwer" && <ViwerBoards />} */}
