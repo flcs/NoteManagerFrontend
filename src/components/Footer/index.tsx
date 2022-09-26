@@ -47,11 +47,11 @@ export default function Footer() {
     <Box
       bg={useColorModeValue("gray.50", "gray.900")}
       color={useColorModeValue("gray.700", "gray.200")}
-      w='100vw'
+      // w='100vw'
     >
       <Container
         as={Stack}
-        maxW={"6xl"}
+        maxW={"5xl"}
         py={4}
         direction={{ base: "column", md: "row" }}
         spacing={4}
