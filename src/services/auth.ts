@@ -9,8 +9,8 @@ export const signIn = (data: ILoginData) => api.post("/auth/login", data);
 
 interface ISignUpData {
   name: string;
-  email: string;
-  password: string;
+  categoria: string;
+  preco: string;
 }
 
 export const signUp = (data: ISignUpData) => api.post("/auth/register", data);

@@ -19,20 +19,20 @@ import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useToast } from "@chakra-ui/react";
 
-import { signUp as signUpService } from "../../services/auth";
+import { getProduto, postProduto, getProdutos } from "../../services/produto";
 import Footer from "../../components/Footer";
 
-const Register = () => {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+const Produto = () => {
+  const [showPreco, setShowPreco] = useState<boolean>(false);
 
   const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [categoria, setCategoria] = useState<string>("");
+  const [preco, setPreco] = useState<string>("");
 
   const toast = useToast();
-  const signup = async () => {
+  const enviaProduto = async () => {
     try {
-      const response = await signUpService({ name, categoria: email, preco: password });
+      const response = await postProduto({ name: name, categoria: categoria, preco: preco });
       if (response.status === 201) {
         toast({
           title: "Sucesso!",
@@ -74,10 +74,10 @@ const Register = () => {
         <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
           <Stack align={"center"}>
             <Heading fontSize={"4xl"} textAlign={"center"}>
-              Cadastre-se
+              Cadastro Produto
             </Heading>
             <Text fontSize={"lg"} color={"gray.600"}>
-              para aproveitar todos os nossos recursos interessantes ✌️
+              para poder vendê-lo ✌️
             </Text>
           </Stack>
           <Box
@@ -87,33 +87,33 @@ const Register = () => {
             p={8}
           >
             <Stack spacing={4}>
-              <FormControl id='firstName' isRequired>
+              <FormControl id='name' isRequired>
                 <FormLabel>Nome:</FormLabel>
                 <Input type='text' onChange={(e) => setName(e.target.value)} />
               </FormControl>
 
-              <FormControl id='email' isRequired>
-                <FormLabel>Endereço de email:</FormLabel>
+              <FormControl id='categoria' isRequired>
+                <FormLabel>Categoria:</FormLabel>
                 <Input
-                  type='email'
-                  onChange={(e) => setEmail(e.target.value)}
+                  type='text'
+                  onChange={(e) => setCategoria(e.target.value)}
                 />
               </FormControl>
-              <FormControl id='password' isRequired>
-                <FormLabel>Senha:</FormLabel>
+              <FormControl id='preco' isRequired>
+                <FormLabel>Preco:</FormLabel>
                 <InputGroup>
                   <Input
-                    type={showPassword ? "text" : "password"}
-                    onChange={(e) => setPassword(e.target.value)}
+                    type={showPreco ? "text" : "password"}
+                    onChange={(e) => setPreco(e.target.value)}
                   />
                   <InputRightElement h={"full"}>
                     <Button
                       variant={"ghost"}
                       onClick={() =>
-                        setShowPassword((showPassword) => !showPassword)
+                        setShowPreco((showPreco) => !showPreco)
                       }
                     >
-                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                      {showPreco ? <ViewIcon /> : <ViewOffIcon />}
                     </Button>
                   </InputRightElement>
                 </InputGroup>
@@ -127,7 +127,7 @@ const Register = () => {
                   _hover={{
                     bg: "blue.500",
                   }}
-                  onClick={signup}
+                  onClick={enviaProduto}
                 >
                   Cadastrar
                 </Button>
@@ -149,4 +149,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Produto;
