@@ -1,14 +1,16 @@
+// https://jasonwatmore.com/post/2020/10/09/react-crud-example-with-react-hook-form#users-list-jsx
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { deleteProduto, getProduto, getProdutos } from '../../services/produto';
+import { apiDeleteProduto, apiGetProduto, apiGetProdutos } from '../../services/produto';
 
 function List({ match }) {
     const { path } = match;
     const [listProdutos, setListProdutos] = useState([]);
 
     useEffect(() => {
-        getProdutos().then(x => setListProdutos(x));
+        apiGetProdutos().then(x => setListProdutos(x));
     }, []);
 
     function deleteUser(id) {
@@ -16,7 +18,7 @@ function List({ match }) {
             if (x.id === id) { x.isDeleting = true; }
             return x;
         }));
-        deleteProduto(id).then(() => {
+        apiDeleteProduto(id).then(() => {
             setListProdutos(listProdutos => listProdutos.filter(x => x.id !== id));
         });
     }

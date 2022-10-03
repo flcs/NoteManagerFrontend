@@ -1,3 +1,5 @@
+// lucas smidth
+
 import React from "react";
 import {
   Flex,
@@ -19,7 +21,7 @@ import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useToast } from "@chakra-ui/react";
 
-import { getProduto, postProduto, getProdutos } from "../../services/produto";
+import { apiGetProduto, apiPostProduto, apiGetProdutos } from "../../services/produto";
 import Footer from "../../components/Footer";
 
 const Produto = () => {
@@ -32,7 +34,7 @@ const Produto = () => {
   const toast = useToast();
   const enviaProduto = async () => {
     try {
-      const response = await postProduto({ name: name, categoria: categoria, preco: preco });
+      const response = await apiPostProduto({ name: name, categoria: categoria, preco: preco });
       if (response.status === 201) {
         toast({
           title: "Sucesso!",

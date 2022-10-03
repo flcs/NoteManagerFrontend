@@ -6,8 +6,8 @@ interface IProdutoData {
     preco: string;
 }
 
-export const getProdutos = () => api.get("/produtos");
-export const getProduto = (id: string) => api.get(`/produtos?id=${id}`);
-export const postProduto = (data: IProdutoData) => api.post("/produto", data);
-export const updateProduto = (data: IProdutoData) => api.put(`/produto`, data);
-export const deleteProduto = (id: string) => api.delete(`/produtos?id=${id}`);
+export const apiGetProdutos = () => api.get("/produtos");
+export const apiGetProduto = (id: string) => api.get(`/produtos?id=${id}`);
+export const apiPostProduto = (data: IProdutoData) => api.post("/produto", data);
+export const apiUpdateProduto = (data: IProdutoData) => api.put(`/produto`, data);
+export const apiDeleteProduto = (id: string) => api.delete(`/produtos?id=${id}`);
